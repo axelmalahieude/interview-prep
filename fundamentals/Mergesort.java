@@ -7,7 +7,7 @@
  */
 import java.util.Random;
 
-public class Main {
+public class Mergesort {
     public static void main(String[] args) {
         int length = 50;
         int[] input = new int[length];
@@ -17,7 +17,8 @@ public class Main {
             input[i] = generator.nextInt() % 50;
         }
         printArray(input);
-        printArray(mergesort(input, 0, 50));
+        mergesort(input, 0, 50);
+        printArray(input);
     }
 
     private static void printArray(int[] array) {
@@ -28,37 +29,38 @@ public class Main {
         System.out.println();
     }
 
-    private static int[] mergesort(int[] input, int start, int end) {
+    private static void mergesort(int[] input, int start, int end) {
         // base case
         if (end - start == 1) {
-            int[] ret = new int[1];
-            ret[0] = input[start];
-            return ret;
+            return;
         } 
 
         // sort the first and second halves
         int midpoint = start + (end - start) / 2;
-        int[] first = mergesort(input, start, midpoint);
-        int[] second = mergesort(input, midpoint, end);
+        mergesort(input, start, midpoint);
+        mergesort(input, midpoint, end);
 
         // merge the two halves
         int[] sorted = new int[end - start];
-        for(int i = 0, f = 0, s = 0; i < sorted.length; i++) {
-            if (f == first.length) {
-                sorted[i] = second[s];
+        for(int i = 0, f = start, s = midpoint; i < sorted.length; i++) {
+            if (f == midpoint) {
+                sorted[i] = input[s];
                 s++;
-            } else if (s == second.length) {
-                sorted[i] = first[f];
+            } else if (s == end) {
+                sorted[i] = input[f];
                 f++;
-            } else if (first[f] < second[s]) {
-                sorted[i] = first[f];
+            } else if (input[f] < input[s]) {
+                sorted[i] = input[f];
                 f++;
             } else {
-                sorted[i] = second[s];
+                sorted[i] = input[s];
                 s++;
             }
         }
 
-        return sorted;
+        // for in-place sorting
+        for (int i = start; i < end; i++) {
+            input[i] = sorted[i - start];
+        }
     }
 }
