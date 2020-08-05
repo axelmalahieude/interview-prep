@@ -42,7 +42,7 @@ public class Quicksort {
         }
         int pivot = sum / (end - start); // average value
 
-        // reorder elements around pivot
+        // reorder elements around pivot so small numbers come before pivot
         int pivotPoint = start;
         for (int i = start; i < end; i++) {
             if (input[i] <= pivot) {
@@ -52,7 +52,12 @@ public class Quicksort {
         }
 
         // sort the two halves
-        quicksort(input, start, pivotPoint);
+
+        // if pivotPoint = end, then all numbers between start and end are identical,
+        // therefore there is no need to sort.
+        // this is because our pivot is the average value, hence either there are 1+ 
+        // numbers > pivot and 1+ numbers < pivot, or all numbers = pivot. 
+        if (pivotPoint != end) quicksort(input, start, pivotPoint);
         quicksort(input, pivotPoint, end);
     }
 
