@@ -1,6 +1,6 @@
 Interview practice, mixture of Google Tech Dev practice problems and reviews/implementations of fundamentals
 
-Topics:
+Topics to look at:
 * Merge sort
 * Quicksort
 * Hash table implementation with arrays
